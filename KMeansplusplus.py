@@ -52,7 +52,7 @@ def plotSilhouettePlusPlus(data,maxIter):
 
 def main():
     data = loadDataset()
-    plotSilhouette(data,maxIter=50)
+    plotSilhouettePlusPlus(data,maxIter=50)
 
 
 main()
