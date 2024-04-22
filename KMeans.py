@@ -32,7 +32,7 @@ def computeDistance(x,y):
 
 # Generates the initial centroids
 def initialization(data,k,seed):
-    # Get the minimum and maximum values for each feature
+    # Get the minimum and maximum values for each feature using seed value
     np.random.seed(seed)
     minValues = np.min(data, axis=0)
     maxValues = np.max(data, axis=0)
