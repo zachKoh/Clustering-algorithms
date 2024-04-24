@@ -131,7 +131,7 @@ def plotSilhouette(data,maxIter):
     return
 
 
-# Test my functions using sklearn
+# Testing my functions using sklearn
 def test(data):
     kValues = range(2, 10)
     silhouetteCoefficients = []
