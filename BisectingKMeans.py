@@ -19,11 +19,11 @@ def computeSumfSquare(clusterData):
 
 
 #Input:
-#clusters: numpy array, cluster assignments for each data point
-#data: numpy array, dataset
+#clusters: A numpy array containing cluster assignments for each data point
+#data: A numpy array of the dataset
 
 #Output:
-#score: float, Silhouette coefficient
+#score: A float which is the Silhouette coefficient
 
 #Description:
 #Computes the Silhouette coefficient for a given clustering.
@@ -48,8 +48,8 @@ def computeSilhouette(clusters, data):
 
 
 #Input
-#data: a numpy array containing the dataset
-#k: and integer containing the number of clusters
+#data: A numpy array containing the dataset
+#k: An integer containing the number of clusters
 
 #Output
 #clusters: A numpy array containing cluster assignments for each data point.

@@ -5,6 +5,11 @@ import random
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
+
+#Output
+#data: A numpy array of the dataset containing data points
+
+#Description: Loads a dataset from a file and extracts data points and labels.
 def loadDataset():
     # Load the dataset
     with open("dataset") as file:
@@ -24,13 +29,32 @@ def loadDataset():
 
 
 
-# Computes euclidean distance between two points
+
+#Description: Computes the Euclidean distance between two points.
+
+#Input
+#x: Coordinates of the first point
+#y: Coordinates of the second point
+
+#Output
+#distance: A float which is the Euclidean distance between the two points
+    
 def computeDistance(x,y):
     #Return the Euclidean distance between x and y
     return np.linalg.norm(x-y)
 
 
-# Generates the initial centroids
+
+#Input
+#data: A numpy array of the dataset containing the data points
+#k: An int which is the number of centroids (clusters)
+#seed: An integer which is a seed value for random number generation
+
+#Output
+#centroids: A numpy array of the initial centroids for the clusters
+
+#Description: Generates initial centroids for the k-means algorithm.
+
 def initialization(data,k,seed):
     # Get the minimum and maximum values for each feature using seed value
     np.random.seed(seed)
@@ -40,11 +64,16 @@ def initialization(data,k,seed):
     centroids = np.random.uniform(low=minValues, high=maxValues, size=(k, data.shape[1]))
     return centroids
 
+#Input 
+#dataset: A numpy array which is a dataset containing data points
+#k: An integer which is the number of centroids 
+#centroids: A numpy array containing the coordinates of all the centroids
 
-# Assign each data point to the nearest cluster centroid using euclidean distance
-# x = dataset
-# k = no of centroids
-# centroids = Cluster centroids
+#Output
+#clusterIds: A numpy array with cluster assignments for each data point
+
+#Description: Assigns cluster IDs to each data point based on the closest centroid.
+
 def assignClusterIDs(dataset,k,centroids):
     numOfObjects = len(dataset)
     clusterIds = np.zeros(numOfObjects, dtype=int)  # Array to store cluster assignments for each data point
@@ -69,7 +98,17 @@ def assignClusterIDs(dataset,k,centroids):
     return clusterIds
 
 
-# Re-initialize the centroids by calculating the average of all data points in that cluster 
+
+#Input 
+#data: A numpy array that contains the dataset containing data points
+#clusters: A numpy array containing cluster assignments for each data point
+#k: Integer which is the number of centroids
+
+#Output 
+#centroids: A numpy array of the coordinates of the centroids
+
+#Description: Computes the centroids of the clusters based on the data points assigned to each cluster.
+
 def computeClusterRepresentatives(data,clusters, k):
     centroids = np.zeros((k, data.shape[1]))
     for i in range(k):
@@ -79,7 +118,16 @@ def computeClusterRepresentatives(data,clusters, k):
     return centroids
 
 
-# Main thread that implements the k-means algorithm
+#Input
+#dataset: numpy array, dataset containing data points
+#k: int, number of centroids
+#maxIter: int, maximum number of iterations
+
+#Output:
+#clusters: numpy array, cluster assignments for each data point
+
+#Description: Performs the k-means algorithm to cluster the dataset into k clusters.
+
 def kMeans(dataset,k,maxIter):
     centroids = initialization(dataset,k,21)
     prevCentroids = None
@@ -93,6 +141,15 @@ def kMeans(dataset,k,maxIter):
     
     return clusters
 
+
+#Input
+#clusters: numpy array, cluster assignments for each data point
+#data: numpy array, dataset
+
+#Output
+#score: float, Silhouette coefficient
+
+#Description: Computes the Silhouette coefficient for a given clustering.
 
 def computeSilhouette(clusters, data):
     numOfObjects = len(data)
@@ -110,6 +167,16 @@ def computeSilhouette(clusters, data):
     score = np.mean(silhouetteValues)
     return score
 
+
+
+#Input
+#data: numpy array, dataset
+#maxIter: int, maximum number of iterations for kMeans algorithm
+
+#Output 
+#None
+
+#Description: Plots the Silhouette coefficients for varied values of k.
 
 def plotSilhouette(data,maxIter):
     kValues = range(2, 10)
@@ -131,7 +198,10 @@ def plotSilhouette(data,maxIter):
     return
 
 
-# Testing my functions using sklearn
+#Input
+#data: numpy array, dataset
+
+#Description: Testing my functions using sklearn
 def test(data):
     kValues = range(2, 10)
     silhouetteCoefficients = []
@@ -155,7 +225,7 @@ def test(data):
     plt.show()
 
 
-
+#Description: Main function to run K-means algorithm and plot the silhouette coefficients
 def main():
     data = loadDataset()
     plotSilhouette(data,maxIter=50)
