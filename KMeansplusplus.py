@@ -1,6 +1,17 @@
 import numpy as np
 from KMeans import *
 
+
+#Input
+#data: numpy array, dataset containing data points
+#k: int, number of centroids (clusters)
+#seed: int, seed value for random number generation
+
+#Output
+#centroids: numpy array, initialized centroids
+
+#Description: Initializes centroids using the K-means++ algorithm.
+
 def kmeansPlusPlusInit(data, k, seed):
     np.random.seed(seed)
     # Choose the first centroid randomly from data points
@@ -17,6 +28,18 @@ def kmeansPlusPlusInit(data, k, seed):
 
     return np.array(centroids)
 
+
+
+#Input
+#dataset: numpy array, dataset containing data points
+#k: int, number of centroids (clusters)
+#maxIter: int, maximum number of iterations
+
+#Output
+#clusters: numpy array, cluster assignments for each data point
+
+#Description: Performs the k-means algorithm using K-means++ initialization.
+
 def kMeansPlusPlus(dataset, k, maxIter):
     centroids = kmeansPlusPlusInit(dataset, k, seed=21)
     prevCentroids = None
@@ -29,6 +52,17 @@ def kMeansPlusPlus(dataset, k, maxIter):
         iter += 1
     
     return clusters
+
+
+
+#Input:
+#data: numpy array, dataset containing data points
+#maxIter: int, maximum number of iterations for kMeansPlusPlus algorithm
+
+#Output:
+#None
+
+#Description: Plots the Silhouette coefficients for varied values of k using K-means++ initialization.
 
 def plotSilhouettePlusPlus(data,maxIter):
     kValues = range(2, 10)
@@ -49,7 +83,7 @@ def plotSilhouettePlusPlus(data,maxIter):
     plt.show()
     return
 
-
+#Description: Main function to generate a synthetic dataset and plot Silhouette coefficients using K-means++ initialization.
 def main():
     data = loadDataset()
     plotSilhouettePlusPlus(data,maxIter=50)
