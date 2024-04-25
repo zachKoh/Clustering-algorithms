@@ -83,6 +83,7 @@ def plotSilhouettePlusPlus(data,maxIter):
     plt.show()
     return
 
+
 #Description: Main function to generate a synthetic dataset and plot Silhouette coefficients using K-means++ initialization.
 def main():
     data = loadDataset()
