@@ -231,4 +231,6 @@ def main():
     #test(data)
 
 
-main()
+#If statement so that Kmeans isn't plotted every time it is imported from another file
+if __name__ == "__main__":
+    main()

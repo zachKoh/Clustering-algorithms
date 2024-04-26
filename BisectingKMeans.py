@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from KMeans import *
+from KMeans import loadDataset, kMeans
 
 
 #Input:
@@ -73,7 +73,7 @@ def bisectingKMeans(data, k):
 # Main function to compute Silhouette coefficient for different numbers of clusters and plot the results.
 def main():
     data = loadDataset()
-    kValues = range(1, 10)
+    kValues = range(0, 10)
     silhouetteCoefficients = []
 
     for k in kValues:
