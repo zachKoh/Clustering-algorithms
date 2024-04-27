@@ -10,23 +10,19 @@ from KMeans import *
 #
 #Output
 #synthetic_data: numpy array, synthetic dataset with the same shape as the input data
-def createSyntheticDataset(data, seed):
-    numDataPoints = len(data)
-    numFeatures = data.shape[1]
 
-    means = np.zeros(numFeatures)
-    standardDeviations = np.ones(numFeatures)
-
+def getSyntheticData(dataset, seed):
+    std = np.std(dataset, axis = 0)
+    mean = np.mean(dataset, axis = 0)
     np.random.seed(seed)
-    synthetic_data = np.random.normal(loc=means, scale=standardDeviations, size=(numDataPoints, numFeatures))
-
-    return synthetic_data
+    syntheticData = np.random.normal(mean, std, size = dataset.shape)
+    return syntheticData
 
 
 #Description: Main function to generate a synthetic dataset and plot Silhouette coefficients.
 def main():
     data = loadDataset()
-    synthetic_dataset = createSyntheticDataset(data, 2169)
-    plotSilhouette(synthetic_dataset,maxIter=50)
+    synthetic_dataset = getSyntheticData(data,42)
+    plotSilhouette(synthetic_dataset,maxIter=10)
 
 main()

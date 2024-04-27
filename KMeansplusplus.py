@@ -14,10 +14,9 @@ from KMeans import *
 
 def kmeansPlusPlusInit(data, k, seed):
     np.random.seed(seed)
-    # Choose the first centroid randomly from data points
     centroids = [data[np.random.choice(len(data))]]
 
-    # Choose the remaining centroids using K-means++ initialization
+    #Choose the centroids using thE KMeans++ initialization
     for _ in range(1, k):
         distances = np.array([min([np.linalg.norm(x - c) for c in centroids]) for x in data])
         probabilities = distances / distances.sum()
@@ -46,7 +45,6 @@ def kMeansPlusPlus(dataset, k, maxIter):
     iter = 0
     while not np.array_equal(centroids, prevCentroids) and iter < maxIter:
         clusters = assignClusterIDs(dataset, k, centroids)
-        # Update centroids
         prevCentroids = centroids
         centroids = computeClusterRepresentatives(dataset, clusters, k)
         iter += 1

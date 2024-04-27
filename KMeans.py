@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+#For testing!!!!
+#from sklearn.cluster import KMeans
+#from sklearn.metrics import silhouette_score
 
 
 #Output
@@ -39,7 +40,6 @@ def loadDataset():
 #distance: A float which is the Euclidean distance between the two points
     
 def computeDistance(x,y):
-    #Return the Euclidean distance between x and y
     return np.linalg.norm(x-y)
 
 
@@ -55,11 +55,11 @@ def computeDistance(x,y):
 #Description: Generates initial centroids for the k-means algorithm.
 
 def initialization(data,k,seed):
-    # Get the minimum and maximum values for each feature using seed value
+    #Get the minimum and maximum values for each feature usingseed value
     np.random.seed(seed)
     minValues = np.min(data, axis=0)
     maxValues = np.max(data, axis=0)
-    # Initialize centroids as random points within the range of each feature
+    #Initialize centroids as random points within the range using those min and max values
     centroids = np.random.uniform(low=minValues, high=maxValues, size=(k, data.shape[1]))
     return centroids
 
@@ -75,23 +75,19 @@ def initialization(data,k,seed):
 
 def assignClusterIDs(dataset,k,centroids):
     numOfObjects = len(dataset)
-    clusterIds = np.zeros(numOfObjects, dtype=int)  # Array to store cluster assignments for each data point
+    clusterIds = np.zeros(numOfObjects, dtype=int)
 
-    # Compute distances between each data point and centroids
-    # For every object in the dataset
+    #Compute the distances between each data point and the centroids
     for i in range(numOfObjects):
         X = dataset[i]
-        #find the closest centroid
         centroidIndOfX = 0
         distanceToClosestCentroid = np.Inf
         for j in range (k):
             currentCentroid = centroids[j]
             dist = computeDistance(X, currentCentroid)
             if dist < distanceToClosestCentroid:
-                # Found closer centroid
                 distanceToClosestCentroid = dist
                 centroidIndOfX = j
-        #assign to X its closest medoid
         clusterIds[i] = int(centroidIndOfX)
 
     return clusterIds
@@ -111,7 +107,6 @@ def assignClusterIDs(dataset,k,centroids):
 def computeClusterRepresentatives(data,clusters, k):
     centroids = np.zeros((k, data.shape[1]))
     for i in range(k):
-        # Calculate mean of data points in the cluster
         clusterPoints = data[clusters == i]
         centroids[i] = np.mean(clusterPoints, axis=0)
     return centroids
@@ -133,7 +128,6 @@ def kMeans(dataset,k,maxIter):
     iterCount = 0
     while not np.array_equal(centroids, prevCentroids) and iterCount < maxIter:
         clusters = assignClusterIDs(dataset,k,centroids)
-        # Update centroids
         prevCentroids = centroids
         centroids = computeClusterRepresentatives(dataset,clusters,k)
         iterCount += 1
@@ -157,10 +151,10 @@ def computeSilhouette(clusters, data):
         clusterIndex = clusters[i]
         clusterData = data[clusters == clusterIndex]
         intraClusterDistance = 0
-        if len(clusterData) > 1:  #Check if the cluster has more than one data point
+        if len(clusterData) > 1:  
             intraClusterDistance = np.mean([computeDistance(data[i], point) for point in clusterData if not np.array_equal(data[i], point)])
         interClusterDistances = [np.mean([computeDistance(data[i], point) for point in data[clusters == otherCluster]]) for otherCluster in np.unique(clusters) if otherCluster != clusterIndex]
-        if len(interClusterDistances) == 0:  #No inter-cluster distances for k = 1
+        if len(interClusterDistances) == 0:  
             silhouetteValue = 0
         else:
             minInterClusterDistance = min(interClusterDistances)
