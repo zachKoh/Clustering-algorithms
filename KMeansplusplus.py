@@ -65,7 +65,7 @@ def kMeansPlusPlus(dataset, k, maxIter):
 #Description: Plots the Silhouette coefficients for varied values of k using K-means++ initialization.
 
 def plotSilhouettePlusPlus(data,maxIter):
-    kValues = range(2, 10)
+    kValues = range(1, 10)
     silhouetteCoefficients = []
 
     for k in kValues:

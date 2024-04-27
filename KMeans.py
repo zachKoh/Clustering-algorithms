@@ -157,11 +157,14 @@ def computeSilhouette(clusters, data):
         clusterIndex = clusters[i]
         clusterData = data[clusters == clusterIndex]
         intraClusterDistance = 0
-        if len(clusterData) > 1:  # Check if the cluster has more than one data point
+        if len(clusterData) > 1:  #Check if the cluster has more than one data point
             intraClusterDistance = np.mean([computeDistance(data[i], point) for point in clusterData if not np.array_equal(data[i], point)])
         interClusterDistances = [np.mean([computeDistance(data[i], point) for point in data[clusters == otherCluster]]) for otherCluster in np.unique(clusters) if otherCluster != clusterIndex]
-        minInterClusterDistance = min(interClusterDistances) if interClusterDistances else 0
-        silhouetteValue = (minInterClusterDistance - intraClusterDistance) / max(minInterClusterDistance, intraClusterDistance)
+        if len(interClusterDistances) == 0:  #No inter-cluster distances for k = 1
+            silhouetteValue = 0
+        else:
+            minInterClusterDistance = min(interClusterDistances)
+            silhouetteValue = (minInterClusterDistance - intraClusterDistance) / max(minInterClusterDistance, intraClusterDistance)
         silhouetteValues.append(silhouetteValue)
     score = np.mean(silhouetteValues)
     return score
@@ -178,7 +181,7 @@ def computeSilhouette(clusters, data):
 #Description: Plots the Silhouette coefficients for varied values of k.
 
 def plotSilhouette(data,maxIter):
-    kValues = range(2, 10)
+    kValues = range(1, 10)
     silhouetteCoefficients = []
 
     for k in kValues:
@@ -202,7 +205,7 @@ def plotSilhouette(data,maxIter):
 
 #Description: Testing my functions using sklearn
 def test(data):
-    kValues = range(2, 10)
+    kValues = range(1, 10)
     silhouetteCoefficients = []
     seed = 21
 
